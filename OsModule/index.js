@@ -18,3 +18,5 @@ console.log('Platform = '+os.platform());
 console.log('Tmp Dir = '+os.tmpdir());
 
 console.log('Type = '+os.type());
+
+console.log('Uptime = '+os.uptime());
