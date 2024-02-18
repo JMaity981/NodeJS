@@ -1,1 +1,1 @@
-demo project
+tutorial project
