@@ -9,6 +9,7 @@
   "author": "jayanta maity",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^2.4.2"
+    "chalk": "^2.4.2",
+    "validator": "^13.11.0"
   }
 }
