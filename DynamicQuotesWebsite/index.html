@@ -53,13 +53,48 @@
 <body>
     <div class="container">
         <div class="quote">
-            <p>"The only way to do great work is to love what you do." - Steve Jobs</p>
-            <p class="author">Steve Jobs</p>
+            <p id="quotes"></p>
+            <p class="author" id="author"></p>
         </div>
-        <a class="next-button" href="next_quote.html">Next Quote</a>
+        <button class="next-button" id="new_quotes">New Quote</button>
+        <button class="next-button" id="tweet_me">Tweet</button>
     </div>
-    <script>
-        const api = "https://type.fit/api/quotes";
+    <script> 
+        const quotes = document.getElementById("quotes");
+        const author = document.getElementById("author");
+        const new_quotes = document.getElementById("new_quotes");
+        const tweet_me = document.getElementById("tweet_me");
+        let realData = "";
+        let quotesData = "";
+
+        const tweetNow = () =>{
+            let tweetPost = "https://twitter.com/intent/tweet?text="+quotesData.text;
+            window.open(tweetPost);
+        };
+        const getNewQuotes = () =>{
+            let rand_num = Math.floor(Math.random()*10);
+            //alert(rand_num);
+            //alert(realData[rand_num].text);
+            quotesData = realData[rand_num];
+            quotes.innerText = `${quotesData.text}`;
+            if(quotesData.author){
+                author.innerText = `${quotesData.author}`;
+            }
+        };
+
+        const getQuotes = async () => {
+            const api = "https://type.fit/api/quotes";
+            try{
+                let data = await fetch(api);
+                realData = await data.json();
+                getNewQuotes();
+                //console.log(realData);
+            }catch (error){}
+        };
+        new_quotes.addEventListener("click",getNewQuotes);
+        tweet_me.addEventListener("click",tweetNow);
+        getQuotes();
+
     </script>
 </body>
 </html>
