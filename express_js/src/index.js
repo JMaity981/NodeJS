@@ -1,17 +1,19 @@
-const path = require("path");
 const express = require("express");
+const path = require("path");
+
 const app = express();
+const port = 8000;
 
-//relative absolute
-// console.log(__dirname);
-
-// console.log(path.join(__dirname,"../public"));
+//built in middleware
 const staticPath = path.join(__dirname,"../public");
-
-//builtin middleware
 app.use(express.static(staticPath));
 
+app.get ("/" ,(req,res)=>{
+    res.send("hello");
+});
 
-app.listen(8000, ()=>{
-    console.log("Listening the port at 8000")
+
+
+app.listen(port, ()=>{
+    console.log(`Listening the port at ${port}`)
 })
