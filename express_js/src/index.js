@@ -6,11 +6,22 @@ const port = 8000;
 
 //built in middleware
 const staticPath = path.join(__dirname,"../public");
-app.use(express.static(staticPath));
 
-app.get ("/" ,(req,res)=>{
-    res.send("hello");
+//to set the view engine
+app.set("view engine","hbs");
+
+// app.use(express.static(staticPath));
+
+//template engine route
+app.get("/", (req,res)=>{
+     res.render("index",{
+        use_name: "HBS"
+     });
 });
+
+// app.get ("/" ,(req,res)=>{
+//     res.send("hello");
+// });
 
 
 
