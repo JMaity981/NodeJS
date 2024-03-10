@@ -4,7 +4,7 @@ const path = require("path");
 const app = express();
 const port = 8000;
 
-//built in Middleware
+//built in  middleware
 
 const staticPath = path.join(__dirname,"../public");
 const templatePath = path.join(__dirname,"../templates");
