@@ -26,11 +26,20 @@ app.get("/", (req,res)=>{
 app.get("/about", (req,res)=>{
     res.render("about");
 });
-
+app.get('/about/*', (req, res)=>{
+    res.render("404",{
+        errorcoment : "About Us Page couldn't be found"
+    });
+});
 // app.get ("/" ,(req,res)=>{
 //     res.send("hello");
 // });
 
+app.get('*', (req, res)=>{
+    res.render("404",{
+        errorcoment : "Page couldn't be found"
+    });
+});
 
 
 app.listen(port, ()=>{
