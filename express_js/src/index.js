@@ -33,5 +33,5 @@ app.get("/about", (req,res)=>{
 
 
 app.listen(port, ()=>{
-    console.log(`Listening the port at ${port}`)
+    console.log(`Listening the port at ${port}`);
 })
