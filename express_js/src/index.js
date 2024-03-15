@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const hbs = require("hbs");
+const requests = require("requests");
 const port = 8000;
 
 //built in  middleware
@@ -24,7 +25,21 @@ app.get("/", (req,res)=>{
 });
 
 app.get("/about", (req,res)=>{
-    res.render("about");
+    // res.render("about");
+    console.log(req.query.name);
+    requests(
+        `http://api.openweathermap.org/data/2.5/weather?q=${req.query.name}&units=metric&appid=ef476f15881decd6024175bff5ca2eda`
+    )
+    .on("data", (chunk) => {
+        const objdata = JSON.parse(chunk);
+        const arrData = [objdata];
+        console.log(`city name is ${arrData[0].name} and the temp is ${arrData[0].main.temp}`);
+        res.write(`city name is ${arrData[0].name} and the temp is ${arrData[0].main.temp}`);
+    })
+    .on("end", (err) => {
+        if (err) return console.log("connection closed due to errors", err);
+        res.end();
+    });
 });
 app.get('/about/*', (req, res)=>{
     res.render("404",{
