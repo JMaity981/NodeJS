@@ -7,7 +7,6 @@
     <div class="container">
         {{>navbar}}
         <h1>Weather Search</h1>
-        <form id="weatherForm">
             <div class="form-group">
                 <label for="city">Enter City:</label>
                 <input type="text" id="cityName" name="city" placeholder="Enter city name" required>
@@ -15,12 +14,11 @@
             <div class="form-group">
                 <input type="submit" value="Search" id="submitBtn">
             </div>
-        </form>
         <div class="weather-result" id="weatherResult">
-            <p id="day">Tuesday</p>
-            <p id="todayDate">13 March</p>
-            <p id="temp"><span>0</span><sup>o</sup>C</p>
-            <p id="tempStatus">Cloud</p>
+            <p id="today"></p>
+            <p id="cityShow"></p>
+            <p><span id="tempShow">0</span><sup>o</sup>C</p>
+            <p id="tempStatusShow"></p>
         </div>
     </div>
 
@@ -33,5 +31,10 @@
             // For simplicity, I'm leaving this part empty as it requires server-side or API integration
         });
     </script> -->
+    <script src="js/main.js"></script>
+    <script>
+        const currentDate = new Date();
+        document.getElementById("today").innerText = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+    </script>
 </body>
 </html>
