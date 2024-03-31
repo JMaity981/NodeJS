@@ -26,15 +26,41 @@ const Playlist = new mongoose.model("playlist",playlistScheema);
 //create document or insert
 const createCocument = async() =>{
     try{
-        const nodePlaylist = new Playlist({
-            name: "React JS",
+
+        /*const nodePlaylist = new Playlist({
+            name: "Mode JS",
             ctype: "Front End",
             videos: 40,
             author: "J. Maity",
             active: true
         });
-        
-        const result = await nodePlaylist.save();
+        // Insert one Document
+        const result = await nodePlaylist.save();*/
+
+        const phpPlaylist = new Playlist({
+            name: "PHP",
+            ctype: "Back End",
+            videos: 70,
+            author: "J. Maity",
+            active: true
+        });
+        const laravelPlaylist = new Playlist({
+            name: "Laravel",
+            ctype: "Back End",
+            videos: 45,
+            author: "J. Maity",
+            active: true
+        });
+        const mysqlPlaylist = new Playlist({
+            name: "mySQL",
+            ctype: "Database",
+            videos: 12,
+            author: "J. Maity",
+            active: true
+        });
+
+        const result = await Playlist.insertMany([phpPlaylist,laravelPlaylist,mysqlPlaylist]);
+
         console.log(result);
     }catch(err){
         console.log(err);
