@@ -24,7 +24,7 @@ const playlistScheema = new mongoose.Schema({
 const Playlist = new mongoose.model("playlist",playlistScheema);
 
 //create document or insert
-const createCocument = async() =>{
+const createDocument = async() =>{
     try{
 
         /*const nodePlaylist = new Playlist({
@@ -66,5 +66,12 @@ const createCocument = async() =>{
         console.log(err);
     }
 }
+// createDocument();
 
-createCocument();
+const getDocument = async() =>{
+    // const result = await Playlist.find();
+    // const result = await Playlist.find({ctype: "Back End"});
+    const result = await Playlist.find({ctype: "Back End"}).select({name:1});
+    console.log(result);
+}
+getDocument();
