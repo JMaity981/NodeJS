@@ -69,9 +69,14 @@ const createDocument = async() =>{
 // createDocument();
 
 const getDocument = async() =>{
-    // const result = await Playlist.find();
-    // const result = await Playlist.find({ctype: "Back End"});
-    const result = await Playlist.find({ctype: "Back End"}).select({name:1});
-    console.log(result);
+    try{
+        // const result = await Playlist.find();
+        // const result = await Playlist.find({ctype: "Back End"});
+        // const result = await Playlist.find({ctype: "Back End"}).select({name:1});
+        const result = await Playlist.find({ctype: "Back End"}).select({name:1}).limit(1);
+        console.log(result);
+    }catch(err){
+        console.log(err);
+    }
 }
 getDocument();
