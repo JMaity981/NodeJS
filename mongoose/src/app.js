@@ -79,7 +79,13 @@ const getDocument = async() =>{
         // const result = await Playlist.find({ctype: {$nin : ['Database']}}).select({name:1});
         // const result = await Playlist.find({ctype: {$in : ['Database','Back End']}}).select({name:1,ctype:1});
         // const result = await Playlist.find({$or : [{ctype:'Database'},{author:'J. Maity'}]}).select({name:1,ctype:1});
-        const result = await Playlist.find({$and : [{ctype:'Database'},{author:'J. Maity'}]}).select({name:1,ctype:1});
+        // const result = await Playlist.find({$and : [{author:'J. Maity'}]})
+        //                             .select({name:1,ctype:1})
+        //                             .countDocuments();
+        const result = await Playlist.find({$and : [{author:'J. Maity'}]})
+                                    .select({name:1})
+                                    // .sort({name : 1});
+                                    .sort({name : -1});
         console.log(result);
     }catch(err){
         console.log(err);
