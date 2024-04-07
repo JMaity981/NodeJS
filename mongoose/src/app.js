@@ -91,4 +91,29 @@ const getDocument = async() =>{
         console.log(err);
     }
 }
-getDocument();
+// getDocument();
+
+const updateDocument = async(id) =>{
+    try{
+        // const result = await Playlist.updateOne({_id:id},{
+        //     $set:{
+        //         name:"MYSQL"
+        //     }
+        // });
+        const result = await Playlist.findByIdAndUpdate(
+            {_id:id},
+            {
+                $set:{
+                    name:"MYSQL"
+                }
+            },
+            {
+                new: true
+            }
+        );
+        console.log(result);
+    }catch(err){
+        console.log(err);
+    }
+}
+updateDocument("6609ada01faa8ecfacd814a5");
