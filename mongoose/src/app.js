@@ -8,9 +8,19 @@ mongoose.connect("mongodb://localhost:27017/technical")
 const playlistScheema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique : true,
+        //lowercase: true,
+        trim:true,
+        minlength:[2,"Minimum 2 Letters"],
+        maxlength:30
     },
-    ctype: String,
+    ctype: {
+        type:String,
+        required:true,
+        lowercase: true,
+        enum:["frontend","backend","database"]
+    },
     videos: Number,
     author: String,
     active: Boolean,
@@ -37,7 +47,7 @@ const createDocument = async() =>{
         // Insert one Document
         const result = await nodePlaylist.save();*/
 
-        const phpPlaylist = new Playlist({
+        /*const phpPlaylist = new Playlist({
             name: "PHP",
             ctype: "Back End",
             videos: 70,
@@ -59,14 +69,21 @@ const createDocument = async() =>{
             active: true
         });
 
-        const result = await Playlist.insertMany([phpPlaylist,laravelPlaylist,mysqlPlaylist]);
-
+        const result = await Playlist.insertMany([phpPlaylist,laravelPlaylist,mysqlPlaylist]);*/
+        const PlaylistData = new Playlist({
+            name: "Express JS",
+            ctype: "Frontend",
+            videos: 22,
+            author: "J. Maity",
+            active: true
+        });
+        const result = await Playlist.insertMany([PlaylistData]);
         console.log(result);
     }catch(err){
         console.log(err);
     }
 }
-// createDocument();
+createDocument();
 
 const getDocument = async() =>{
     try{
@@ -127,4 +144,4 @@ const deleteDocument = async(_id)=>{
         console.log(err);
     }
 }
-deleteDocument("6609ada01faa8ecfacd814a5");
+// deleteDocument("6609ada01faa8ecfacd814a5");
