@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 //connection creation and  creation a new db
 mongoose.connect("mongodb://localhost:27017/technical")
@@ -37,6 +38,15 @@ const playlistScheema = new mongoose.Schema({
         }*/
     },
     author: String,
+    email: {
+        type:String,
+        required:true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error("Email is invalid");
+            }
+        }
+    },
     active: Boolean,
     date: {
         type:Date,
@@ -85,10 +95,11 @@ const createDocument = async() =>{
 
         const result = await Playlist.insertMany([phpPlaylist,laravelPlaylist,mysqlPlaylist]);*/
         const PlaylistData = new Playlist({
-            name: "Python",
-            ctype: "Backend",
+            name: "Type Script",
+            ctype: "Frontend",
             videos: 20,
             author: "J. Maity",
+            email: "jayanta@cloudoter.com",
             active: true
         });
         const result = await Playlist.insertMany([PlaylistData]);
