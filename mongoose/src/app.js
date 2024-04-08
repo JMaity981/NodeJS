@@ -116,4 +116,15 @@ const updateDocument = async(id) =>{
         console.log(err);
     }
 }
-updateDocument("6609ada01faa8ecfacd814a5");
+// updateDocument("6609ada01faa8ecfacd814a5");
+
+const deleteDocument = async(_id)=>{
+    try{
+        // const result = await Playlist.deleteOne({_id});
+        const result = await Playlist.findByIdAndDelete({_id});
+        console.log(result);
+    }catch(err){
+        console.log(err);
+    }
+}
+deleteDocument("6609ada01faa8ecfacd814a5");
