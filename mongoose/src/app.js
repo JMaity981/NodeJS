@@ -21,7 +21,21 @@ const playlistScheema = new mongoose.Schema({
         lowercase: true,
         enum:["frontend","backend","database"]
     },
-    videos: Number,
+    videos: {
+        type:Number,
+        validate(value){
+            if(value<0){
+                throw new Error("Videos count should not be negative")
+            }
+        }
+        // OR
+        /*validate:{
+            validator:function(value){
+                return value.length < 0
+            },
+            message:"Videos count should not be negative"
+        }*/
+    },
     author: String,
     active: Boolean,
     date: {
@@ -71,9 +85,9 @@ const createDocument = async() =>{
 
         const result = await Playlist.insertMany([phpPlaylist,laravelPlaylist,mysqlPlaylist]);*/
         const PlaylistData = new Playlist({
-            name: "Express JS",
-            ctype: "Frontend",
-            videos: 22,
+            name: "Python",
+            ctype: "Backend",
+            videos: 20,
             author: "J. Maity",
             active: true
         });
