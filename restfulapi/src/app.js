@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.post("/students",(req,res)=>{
+/*app.post("/students",(req,res)=>{
     console.log(req.body);
     const user = new Student(req.body);
     user.save().then(()=>{
@@ -16,6 +16,16 @@ app.post("/students",(req,res)=>{
         res.status(400).send(e);
     });
     // res.send("Student Inserted Successfully");
+})*/
+
+app.post("/students",async(req,res)=>{
+    try{
+        const user = new Student(req.body);
+        const createUser = await user.save();
+        res.status(201).send(createUser);
+    }catch(e){
+        res.status(400).send(e);
+    }
 })
 
 app.listen(port,()=>{
