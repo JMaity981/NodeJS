@@ -28,6 +28,23 @@ app.post("/students",async(req,res)=>{
     }
 })
 
+app.get("/students/:id",async(req,res)=>{
+    try{
+        const _id = req.params.id;
+        const studentsData = await Student.findById(_id);
+        // const studentsData = await Student.find();
+        console.log(studentsData);
+        if(!studentsData){
+            return res.status(400).send();
+        }
+        else{
+            res.send(studentsData);
+        }
+    }catch(e){
+        res.status(500).send(e);
+    }
+})
+
 app.listen(port,()=>{
     console.log(`conection is setup at ${port}`);
 })
