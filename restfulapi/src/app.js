@@ -18,6 +18,7 @@ app.use(express.json());
     // res.send("Student Inserted Successfully");
 })*/
 
+//Create new Student
 app.post("/students",async(req,res)=>{
     try{
         const user = new Student(req.body);
@@ -28,6 +29,7 @@ app.post("/students",async(req,res)=>{
     }
 })
 
+//Get All Students Data
 app.get("/students",async(req,res)=>{
     try{
         const studentsData = await Student.find();
@@ -37,6 +39,7 @@ app.get("/students",async(req,res)=>{
     }
 })
 
+//Get Studentby Id
 app.get("/students/:id",async(req,res)=>{
     try{
         const _id = req.params.id;
@@ -53,6 +56,7 @@ app.get("/students/:id",async(req,res)=>{
     }
 })
 
+//Delete Student By Id
 app.delete("/students/:id",async(req,res)=>{
     try{
         const deleteStudent = await Student.findByIdAndDelete(req.params.id);
