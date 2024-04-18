@@ -28,11 +28,19 @@ app.post("/students",async(req,res)=>{
     }
 })
 
+app.get("/students",async(req,res)=>{
+    try{
+        const studentsData = await Student.find();
+        res.send(studentsData);
+    }catch(e){
+        res.status(500).send(e);
+    }
+})
+
 app.get("/students/:id",async(req,res)=>{
     try{
         const _id = req.params.id;
         const studentsData = await Student.findById(_id);
-        // const studentsData = await Student.find();
         console.log(studentsData);
         if(!studentsData){
             return res.status(400).send();
@@ -40,6 +48,18 @@ app.get("/students/:id",async(req,res)=>{
         else{
             res.send(studentsData);
         }
+    }catch(e){
+        res.status(500).send(e);
+    }
+})
+
+app.delete("/students/:id",async(req,res)=>{
+    try{
+        const deleteStudent = await Student.findByIdAndDelete(req.params.id);
+        if(!req.params.id){
+            return res.status(400).send();
+        }
+        res.send(deleteStudent);
     }catch(e){
         res.status(500).send(e);
     }
