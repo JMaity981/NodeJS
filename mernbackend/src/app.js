@@ -53,6 +53,19 @@ app.post("/register", async (req,res)=>{
 app.get("/login", (req,res)=>{
     res.render("login")
 });
+app.post("/login", async(req,res)=>{
+    try{
+        const email = req.body.email;
+        const password = req.body.password;
+        const userDetails = await Register.findOne({email:email});
+        if(userDetails.password===password)
+        res.status(201).render("index");
+        else
+        res.send("Password does not match.")
+    }catch(error){
+        res.status(400).send(error);
+    }
+});
 app.listen(port, ()=> {
     console.log(`Server is running at port no. ${port}`);
 });
