@@ -59,7 +59,9 @@ app.post("/login", async(req,res)=>{
         const email = req.body.email;
         const password = req.body.password;
         const userDetails = await Register.findOne({email:email});
-        if(userDetails.password===password)
+        const passwordMatch = await bcrypt.compare(password,userDetails.password);
+        // if(userDetails.password===password)
+        if(passwordMatch)
         res.status(201).render("index");
         else
         res.send("Password does not match.")
