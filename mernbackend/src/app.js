@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const hbs = require("hbs");
+const bcrypt = require("bcryptjs");
 require("./db/conn");
 const Register = require("./models/register");
 const port = process.env.PORT || 3000;
@@ -66,6 +67,16 @@ app.post("/login", async(req,res)=>{
         res.status(400).send(error);
     }
 });
+
+const securePassword = async (passwordVal) =>{
+    const passwordHash =  await bcrypt.hash(passwordVal,10);
+    console.log(passwordHash);
+
+    const passwordMatch = await bcrypt.compare("jayanta!23",passwordHash);
+    console.log(passwordMatch);
+}
+securePassword("Jayanta!23");
+
 app.listen(port, ()=> {
     console.log(`Server is running at port no. ${port}`);
 });
