@@ -75,7 +75,7 @@ const securePassword = async (passwordVal) =>{
     const passwordMatch = await bcrypt.compare("jayanta!23",passwordHash);
     console.log(passwordMatch);
 }
-securePassword("Jayanta!23");
+// securePassword("Jayanta!23");
 
 app.listen(port, ()=> {
     console.log(`Server is running at port no. ${port}`);
