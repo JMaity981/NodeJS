@@ -43,11 +43,11 @@ app.post("/register", async (req,res)=>{
                 confirm_password: c_password
             });
             // console.log("the success part" + registerUser);
-            const token = registerUser.generateAuthToken();
-            console.log("The token part " + token)
+            const token = await registerUser.generateAuthToken();
+            console.log("The token part " + token);
 
             const registered = await registerUser.save();
-            console.log("The page part " + registered)
+            console.log("The page part " + registered);
             res.status(201).render("index");
         }else{
             res.send("Password and Confirm Password does not match.")
@@ -67,6 +67,10 @@ app.post("/login", async(req,res)=>{
         const password = req.body.password;
         const userDetails = await Register.findOne({email:email});
         const passwordMatch = await bcrypt.compare(password,userDetails.password);
+
+        const token = await userDetails.generateAuthToken();
+        console.log("The token part " + token);
+
         // if(userDetails.password===password)
         if(passwordMatch)
         res.status(201).render("index");
