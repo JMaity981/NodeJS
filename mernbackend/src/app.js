@@ -19,7 +19,7 @@ app.set("view engine","hbs");
 app.set("views",template_path);
 hbs.registerPartials(partials_path);
 
-app.get("/", (req,res)=>{
+/*app.get("/", (req,res)=>{
     res.render("index")
 });
 
@@ -68,7 +68,7 @@ app.post("/login", async(req,res)=>{
     }catch(error){
         res.status(400).send(error);
     }
-});
+});*/
 
 const securePassword = async (passwordVal) =>{
     const passwordHash =  await bcrypt.hash(passwordVal,10);
@@ -79,6 +79,17 @@ const securePassword = async (passwordVal) =>{
 }
 // securePassword("Jayanta!23");
 
+const jwt = require("jsonwebtoken");
+const createToken = async() => {
+    //Secret key - minimum 32 charecter
+    const secret_key="mynameisjayantantamaityjayantamaity";
+    const token = await jwt.sign({_id:"662a48be1fba7fd9a3e9fde4"}, secret_key, {expiresIn:"2 seconds"});
+    console.log(token);
+
+    const userVerify = await jwt.verify(token, secret_key);
+    console.log(userVerify);
+}
+createToken();
 app.listen(port, ()=> {
     console.log(`Server is running at port no. ${port}`);
 });
