@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const hbs = require("hbs");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 require("./db/conn");
 const Register = require("./models/register");
 const port = process.env.PORT || 3000;
@@ -19,7 +20,7 @@ app.set("view engine","hbs");
 app.set("views",template_path);
 hbs.registerPartials(partials_path);
 
-/*app.get("/", (req,res)=>{
+app.get("/", (req,res)=>{
     res.render("index")
 });
 
@@ -41,12 +42,18 @@ app.post("/register", async (req,res)=>{
                 password: password,
                 confirm_password: c_password
             });
+            // console.log("the success part" + registerUser);
+            const token = registerUser.generateAuthToken();
+            console.log("The token part " + token)
+
             const registered = await registerUser.save();
+            console.log("The page part " + registered)
             res.status(201).render("index");
         }else{
             res.send("Password and Confirm Password does not match.")
         }
     }catch(error){
+        console.log("error is "+error);
         res.status(400).send(error);
     }
 });
@@ -68,7 +75,7 @@ app.post("/login", async(req,res)=>{
     }catch(error){
         res.status(400).send(error);
     }
-});*/
+});
 
 const securePassword = async (passwordVal) =>{
     const passwordHash =  await bcrypt.hash(passwordVal,10);
@@ -79,7 +86,6 @@ const securePassword = async (passwordVal) =>{
 }
 // securePassword("Jayanta!23");
 
-const jwt = require("jsonwebtoken");
 const createToken = async() => {
     //Secret key - minimum 32 charecter
     const secret_key="mynameisjayantantamaityjayantamaity";
@@ -89,7 +95,8 @@ const createToken = async() => {
     const userVerify = await jwt.verify(token, secret_key);
     console.log(userVerify);
 }
-createToken();
+// createToken();
+
 app.listen(port, ()=> {
     console.log(`Server is running at port no. ${port}`);
 });
