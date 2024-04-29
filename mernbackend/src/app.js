@@ -28,9 +28,23 @@ app.get("/", (req,res)=>{
     res.render("index")
 });
 
-app.get("/secret",auth, (req,res)=>{
+app.get("/secret", auth, (req,res)=>{
     console.log(`Cookies details ${req.cookies.jwt}`);
     res.render("secret")
+});
+app.get("/logout", auth, async(req,res)=>{
+    try{
+        console.log(req.user);
+        req.user.tokens = req.user.tokens.filter((currentElement) => {
+            return  currentElement.token != req.token;
+        })
+        res.clearCookie("jwt");
+        console.log('Logout Successfully');
+        await req.user.save();
+        res.render("login");
+    }catch{
+        res.status(500).send(error);
+    }
 });
 
 app.get("/register", (req,res)=>{
