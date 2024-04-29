@@ -5,6 +5,7 @@ const path = require("path");
 const hbs = require("hbs");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 require("./db/conn");
 const Register = require("./models/register");
 const port = process.env.PORT || 3000;
@@ -13,6 +14,7 @@ const template_path = path.join(__dirname,"../templates/views");
 const partials_path = path.join(__dirname,"../templates/partials");
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
 
 app.use(express.static(static_path));
@@ -22,6 +24,11 @@ hbs.registerPartials(partials_path);
 
 app.get("/", (req,res)=>{
     res.render("index")
+});
+
+app.get("/secret", (req,res)=>{
+    console.log(`Cookies details ${req.cookies.jwt}`);
+    res.render("secret")
 });
 
 app.get("/register", (req,res)=>{
@@ -76,15 +83,16 @@ app.post("/login", async(req,res)=>{
         const passwordMatch = await bcrypt.compare(password,userDetails.password);
 
         const token = await userDetails.generateAuthToken();
-        console.log("The token part " + token);
+        // console.log("The token part " + token);
 
+        res.cookie("jwt", token,{
+            expires:new Date(Date.now()+50000),
+            httpOnly:true,
+            // secure:true
+        });
+        console.log(`Cookies details ${req.cookies.jwt}`);
         // if(userDetails.password===password)
         if(passwordMatch){
-            res.cookie("jwt", token,{
-                expires:new Date(Date.now()+50000),
-                httpOnly:true,
-                // secure:true
-            });
             res.status(201).render("index");
         }else
             res.send("Password does not match.")
