@@ -79,10 +79,15 @@ app.post("/login", async(req,res)=>{
         console.log("The token part " + token);
 
         // if(userDetails.password===password)
-        if(passwordMatch)
-        res.status(201).render("index");
-        else
-        res.send("Password does not match.")
+        if(passwordMatch){
+            res.cookie("jwt", token,{
+                expires:new Date(Date.now()+50000),
+                httpOnly:true,
+                // secure:true
+            });
+            res.status(201).render("index");
+        }else
+            res.send("Password does not match.")
     }catch(error){
         res.status(400).send(error);
     }
