@@ -6,6 +6,8 @@ const hbs = require("hbs");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+
+const auth = require("./middleware/auth");
 require("./db/conn");
 const Register = require("./models/register");
 const port = process.env.PORT || 3000;
@@ -26,7 +28,7 @@ app.get("/", (req,res)=>{
     res.render("index")
 });
 
-app.get("/secret", (req,res)=>{
+app.get("/secret",auth, (req,res)=>{
     console.log(`Cookies details ${req.cookies.jwt}`);
     res.render("secret")
 });
