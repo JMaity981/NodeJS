@@ -44,7 +44,14 @@ app.post("/register", async (req,res)=>{
             });
             // console.log("the success part" + registerUser);
             const token = await registerUser.generateAuthToken();
-            console.log("The token part " + token);
+            // console.log("The token part " + token);
+
+            // Token store in cookies
+            res.cookie("jwt", token,{
+                expires:new Date(Date.now()+30000),
+                httpOnly:true
+            });
+            // console.log(cookie);
 
             const registered = await registerUser.save();
             console.log("The page part " + registered);
